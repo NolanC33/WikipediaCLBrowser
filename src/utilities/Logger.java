@@ -1,4 +1,4 @@
-package wikiTopography;
+package utilities;
 
 public class Logger {
 	
