@@ -1,13 +1,13 @@
 package exceptions;
 
-public class BufferCreationException extends Exception {
+public class PageParseException extends Exception {
 	
 	/**
 	 * Generated
 	 */
 	private static final long serialVersionUID = -5357367082046132514L;
 
-	public BufferCreationException(String message) {
+	public PageParseException(String message) {
 		super(message);
 	}
 	

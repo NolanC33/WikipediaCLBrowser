@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import exceptions.BufferCreationException;
+import exceptions.PageParseException;
 
 public class WikipediaPage {
 	
@@ -25,12 +25,12 @@ public class WikipediaPage {
 		this.wikiPageURl = url;
 	}
 	
-	public boolean readPage() {
+	public boolean parseWikipediaPage() throws PageParseException {
 		
 		BufferedReader in = null;
 		try {
 			in = createBufferedReaderForPage();
-		} catch (BufferCreationException e) {
+		} catch (PageParseException e) {
 			Logger.logError(e.getMessage());
 			return false;
 		}
@@ -50,26 +50,27 @@ public class WikipediaPage {
 			in.close();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new PageParseException("An IO Exception Occured while reading the file");
 		}
 		
-		Logger.logMessage(whatWasRead.toString());
+		
 
 		
 		return true; // TODO...
 	}
 	
-	private BufferedReader createBufferedReaderForPage() throws BufferCreationException {
+
+	
+	private BufferedReader createBufferedReaderForPage() throws PageParseException {
 		
 		BufferedReader in = null;
 		
 		try {
 			in = new BufferedReader(new InputStreamReader(wikiPageURl.openStream()));
 		} catch (MalformedURLException e) {	
-			throw new BufferCreationException("The url \"" + "urlString" + "\" is not valid");
+			throw new PageParseException("The url \"" + "urlString" + "\" is not valid");
 		} catch (IOException e) {
-			throw new BufferCreationException("An IO Exception Occured");
+			throw new PageParseException("An IO Exception Occured while creating the BufferedReader");
 		}
 		
 		return in;
