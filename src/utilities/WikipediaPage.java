@@ -4,19 +4,53 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 
+import exceptions.BadUrlException;
 import exceptions.BufferCreationException;
 
 public class WikipediaPage {
 	
-	private String urlString;
+	
+	// Statics /////////////////////////////////////////////////////////////////
+	
+	public static WikipediaPage CreatePage(String url) throws BadUrlException {
+		
+		URL u = validateWikipediaURL(url);
+		
+		return new WikipediaPage(u);
+	}
+	
+	private static URL validateWikipediaURL(String url) throws BadUrlException {
+		
+		if (url == null) {
+			throw new BadUrlException("Argument url is null");
+		}
+		
+		URL u;
+		try {
+			u = new URL(url);
+			u.toURI();
+		} catch (MalformedURLException e) {
+			throw new BadUrlException("url \"" + url + "\" was malformed");
+		} catch (URISyntaxException e) {
+			throw new BadUrlException("A valid URL could not be parsed from \"" + url + "\"");
+		}
+		
+		return u;
+	}
+	
+	
+	// Instance /////////////////////////////////////////////////////////////////
+	
+	private URL wikiPageURl;
 	
 	private String contents; // likely not the optimal way to store contents of a webpage. 
 
-	public WikipediaPage(String url) {
+	private WikipediaPage(URL url) {
 		
-		this.urlString = url;
+		this.wikiPageURl = url;
 	}
 	
 	public boolean readPage() {
@@ -35,12 +69,10 @@ public class WikipediaPage {
 	
 	private BufferedReader createBufferedReaderForPage() throws BufferCreationException {
 		
-		URL urlObject = null;
 		BufferedReader in = null;
 		
 		try {
-			urlObject = new URL(urlString);
-			in = new BufferedReader(new InputStreamReader(urlObject.openStream()));
+			in = new BufferedReader(new InputStreamReader(wikiPageURl.openStream()));
 		} catch (MalformedURLException e) {	
 			throw new BufferCreationException("The url \"" + "urlString" + "\" is not valid");
 		} catch (IOException e) {
