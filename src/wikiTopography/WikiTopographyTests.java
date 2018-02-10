@@ -3,15 +3,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import exceptions.BadUrlException;
+import exceptions.NotWikipediaURLException;
 import utilities.WikipediaPage;
 
 class WikiTopographyTests {
 
 	@Test
-	void testWikipediaPageConstructor() {
-		WikipediaPage wikiPage = new WikipediaPage("https://www.wikipedia.org/");
+	void testWikipediaPageFactoryConstructorNull() {
 		
-		assertTrue(wikiPage != null);
+		
+		boolean exceptionCaught = false;
+		
+		try {
+			WikipediaPage.CreatePage(null);
+		} catch (BadUrlException e) {
+			exceptionCaught = true;
+		} catch (NotWikipediaURLException e) {
+			; // not the exception we're looking for. 
+		}
+		
+		assertTrue(exceptionCaught);
 	}
 
 }

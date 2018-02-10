@@ -9,20 +9,22 @@ import java.net.URL;
 
 import exceptions.BadUrlException;
 import exceptions.BufferCreationException;
+import exceptions.NotWikipediaURLException;
 
 public class WikipediaPage {
 	
 	
 	// Statics /////////////////////////////////////////////////////////////////
 	
-	public static WikipediaPage CreatePage(String url) throws BadUrlException {
+	public static WikipediaPage CreatePage(String url) throws BadUrlException, NotWikipediaURLException {
 		
-		URL u = validateWikipediaURL(url);
+		URL u = createAndValidateWikipediaURL(url);
 		
 		return new WikipediaPage(u);
 	}
+
 	
-	private static URL validateWikipediaURL(String url) throws BadUrlException {
+	private static URL createAndValidateWikipediaURL(String url) throws BadUrlException, NotWikipediaURLException {
 		
 		if (url == null) {
 			throw new BadUrlException("Argument url is null");
@@ -36,6 +38,10 @@ public class WikipediaPage {
 			throw new BadUrlException("url \"" + url + "\" was malformed");
 		} catch (URISyntaxException e) {
 			throw new BadUrlException("A valid URL could not be parsed from \"" + url + "\"");
+		}
+		
+		if (url.startsWith("https://en.wikipedia.org/") == false) {
+			throw new NotWikipediaURLException("The url \"" + url + "\" is not a Wikipedia URL");
 		}
 		
 		return u;
