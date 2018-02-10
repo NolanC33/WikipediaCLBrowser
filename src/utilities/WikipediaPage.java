@@ -13,13 +13,13 @@ import exceptions.PageParseException;
 
 public class WikipediaPage {
 	
-	// Instance /////////////////////////////////////////////////////////////////
-	
 	private URL wikiPageURl;
 	
 	private String firstParagraph; // likely not the optimal way to store contents of a webpage.
 	
 	private String title;
+	
+	private Document thePage;
 	
 
 	WikipediaPage(URL url) {
@@ -28,29 +28,28 @@ public class WikipediaPage {
 	}
 	
 	public boolean parseWikipediaPage() throws PageParseException {
-		
-		BufferedReader in = null;
-		try {
-			in = createBufferedReaderForPage();
-		} catch (PageParseException e) {
-			Logger.logError(e.getMessage());
-			return false;
-		}
-		
-		Document thePage = readPageContents(in);
-		
 
+		BufferedReader in = createBufferedReaderForPage();
+
+		this.thePage = readPageContents(in);
+		
+		scrapeElementsFromPage();
+		
 		
 		return true; // TODO...
+	}
+	
+	private void scrapeElementsFromPage() {
+		
+		this.title = thePage.getElementById("title").text();
+
 	}
 	
 	private Document readPageContents(BufferedReader pageReader) throws PageParseException {
 		
 		String inputLine;
 		
-		
 		StringBuffer whatWasRead = new StringBuffer();
-
 		
 		try {
 			
