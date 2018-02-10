@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.BadUrlException;
 import exceptions.NotWikipediaURLException;
-import utilities.WikipediaPage;
+import utilities.PageManager;
 
-class WikiTopographyTests {
+class WikiCLBrowserTests {
 
 	@Test
 	void testWikipediaPageFactoryConstructorNull() {
@@ -16,7 +16,7 @@ class WikiTopographyTests {
 		boolean exceptionCaught = false;
 		
 		try {
-			WikipediaPage.CreatePage(null);
+			PageManager.CreatePage(null);
 		} catch (BadUrlException e) {
 			exceptionCaught = true;
 		} catch (NotWikipediaURLException e) {
@@ -31,7 +31,7 @@ class WikiTopographyTests {
 		boolean exceptionCaught = false;
 		
 		try {
-			WikipediaPage.CreatePage("asdfasdf");
+			PageManager.CreatePage("asdfasdf");
 		} catch (BadUrlException e) {
 			exceptionCaught = true;
 		} catch (NotWikipediaURLException e) {
