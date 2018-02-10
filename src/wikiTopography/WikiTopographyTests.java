@@ -25,5 +25,20 @@ class WikiTopographyTests {
 		
 		assertTrue(exceptionCaught);
 	}
+	
+	@Test
+	void testWikipediaPageFactoryConstructorMalformed() {
+		boolean exceptionCaught = false;
+		
+		try {
+			WikipediaPage.CreatePage("asdfasdf");
+		} catch (BadUrlException e) {
+			exceptionCaught = true;
+		} catch (NotWikipediaURLException e) {
+			; // not the exception we're looking for. 
+		}
+		
+		assertTrue(exceptionCaught);
+	}
 
 }
