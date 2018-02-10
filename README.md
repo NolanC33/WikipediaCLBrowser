@@ -1,4 +1,4 @@
-# **--- Wikipedia Command Line Browser ---**
+# Wikipedia Command Line Browser
 
 ## Introduction
 
