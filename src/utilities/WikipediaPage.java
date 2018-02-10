@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import exceptions.PageParseException;
 
 public class WikipediaPage {
@@ -17,7 +20,6 @@ public class WikipediaPage {
 	private String firstParagraph; // likely not the optimal way to store contents of a webpage.
 	
 	private String title;
-	
 	
 
 	WikipediaPage(URL url) {
@@ -35,6 +37,15 @@ public class WikipediaPage {
 			return false;
 		}
 		
+		Document thePage = readPageContents(in);
+		
+
+		
+		return true; // TODO...
+	}
+	
+	private Document readPageContents(BufferedReader pageReader) throws PageParseException {
+		
 		String inputLine;
 		
 		
@@ -43,20 +54,19 @@ public class WikipediaPage {
 		
 		try {
 			
-			while((inputLine = in.readLine()) != null) {
+			while((inputLine = pageReader.readLine()) != null) {
 				whatWasRead.append(inputLine);
 			}
 			
-			in.close();
+			pageReader.close();
 
 		} catch (IOException e) {
 			throw new PageParseException("An IO Exception Occured while reading the file");
 		}
 		
 		
-
+		return Jsoup.parse(whatWasRead.toString());
 		
-		return true; // TODO...
 	}
 	
 
