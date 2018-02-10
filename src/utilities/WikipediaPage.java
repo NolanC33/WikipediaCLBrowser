@@ -1,9 +1,12 @@
 package utilities;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import exceptions.BadURLException;
+import exceptions.BufferCreationException;
 
 public class WikipediaPage {
 	
@@ -18,30 +21,33 @@ public class WikipediaPage {
 	
 	public boolean readPage() {
 		
+		BufferedReader in = null;
 		try {
-			URL urlToRead = formURL();
-		} catch (BadURLException e) {
+			in = createBufferedReaderForPage();
+		} catch (BufferCreationException e) {
 			Logger.logError(e.getMessage());
 			return false;
 		}
-		
-		
 
 		
 		return true; // TODO...
 	}
 	
-	private URL formURL() throws BadURLException {
+	private BufferedReader createBufferedReaderForPage() throws BufferCreationException {
 		
 		URL urlObject = null;
+		BufferedReader in = null;
 		
 		try {
 			urlObject = new URL(urlString);
+			in = new BufferedReader(new InputStreamReader(urlObject.openStream()));
 		} catch (MalformedURLException e) {	
-			throw new BadURLException(urlString);
+			throw new BufferCreationException("The url \"" + "urlString" + "\" is not valid");
+		} catch (IOException e) {
+			throw new BufferCreationException("An IO Exception Occured");
 		}
 		
-		return urlObject;
+		return in;
 		
 	}
 	
