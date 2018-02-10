@@ -14,7 +14,11 @@ public class WikipediaPage {
 	
 	private URL wikiPageURl;
 	
-	private String contents; // likely not the optimal way to store contents of a webpage. 
+	private String firstParagraph; // likely not the optimal way to store contents of a webpage.
+	
+	private String title;
+	
+	
 
 	WikipediaPage(URL url) {
 		
@@ -30,6 +34,27 @@ public class WikipediaPage {
 			Logger.logError(e.getMessage());
 			return false;
 		}
+		
+		String inputLine;
+		
+		
+		StringBuffer whatWasRead = new StringBuffer();
+
+		
+		try {
+			
+			while((inputLine = in.readLine()) != null) {
+				whatWasRead.append(inputLine);
+			}
+			
+			in.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Logger.logMessage(whatWasRead.toString());
 
 		
 		return true; // TODO...

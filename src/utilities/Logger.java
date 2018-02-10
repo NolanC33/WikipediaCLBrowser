@@ -23,4 +23,8 @@ public class Logger {
 		if (OutputMessages)
 			System.err.println(message);
 	}
+	
+	public static void logMessage(String message) {
+		System.out.println(message);
+	}
 }
