@@ -22,12 +22,13 @@ public class WikipediaPage {
 	private Document thePage;
 	
 
-	WikipediaPage(URL url) {
+	WikipediaPage(URL url) throws PageParseException {
 		
 		this.wikiPageURl = url;
+		parseWikipediaPage();
 	}
 	
-	public boolean parseWikipediaPage() throws PageParseException {
+	public void parseWikipediaPage() throws PageParseException {
 
 		BufferedReader in = createBufferedReaderForPage();
 
@@ -36,7 +37,8 @@ public class WikipediaPage {
 		scrapeElementsFromPage();
 		
 		
-		return true; // TODO...
+		//TODO throw exception on failure..
+		
 	}
 	
 	private void scrapeElementsFromPage() {
