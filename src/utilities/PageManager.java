@@ -7,13 +7,14 @@ import java.util.Hashtable;
 
 import exceptions.BadUrlException;
 import exceptions.NotWikipediaURLException;
+import exceptions.PageParseException;
 
 public class PageManager {
 	
 	private static Hashtable<String, WikipediaPage> PageTable = new Hashtable<String, WikipediaPage>();
 
 	
-	public static WikipediaPage CreatePage(String url) throws BadUrlException, NotWikipediaURLException {
+	public static WikipediaPage CreatePage(String url) throws BadUrlException, NotWikipediaURLException, PageParseException {
 		
 		URL u = createAndValidateWikipediaURL(url);
 		

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.BadUrlException;
 import exceptions.NotWikipediaURLException;
+import exceptions.PageParseException;
 import utilities.PageManager;
 
 class WikiCLBrowserTests {
@@ -21,6 +22,8 @@ class WikiCLBrowserTests {
 			exceptionCaught = true;
 		} catch (NotWikipediaURLException e) {
 			; // not the exception we're looking for. 
+		} catch (PageParseException e) {
+			; // not the exception we're looking for. 
 		}
 		
 		assertTrue(exceptionCaught);
@@ -35,6 +38,8 @@ class WikiCLBrowserTests {
 		} catch (BadUrlException e) {
 			exceptionCaught = true;
 		} catch (NotWikipediaURLException e) {
+			; // not the exception we're looking for. 
+		} catch (PageParseException e) {
 			; // not the exception we're looking for. 
 		}
 		
